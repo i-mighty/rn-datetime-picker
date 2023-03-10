@@ -1,0 +1,36 @@
+{
+  "name": "@imighty/rn-datetime-picker",
+  "description": "A pure JS react-native modular & modern datetime picker",
+  "version": "1.0.4",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/i-mighty/rn-datetime-picker"
+  },
+  "scripts": {
+    "build": "tsc && cp -R src/assets lib",
+    "postbuild": "cp package.json lib && cp .npmignore lib && cp .npmrc lib && cp .yarnrc lib",
+    "release": "yarn build && cd lib && npm publish",
+    "format": "prettier --write **/*.{js,ts,tsx}"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.7",
+    "next-frame": "^0.2.3",
+    "react-native-modal": "^13.0.0",
+    "react-native-responsive-screen": "^1.4.2",
+    "react-native-safe-area-context": "3.3.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.3",
+    "react-native": ">=0.65"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.38",
+    "@types/react-native": "^0.66.12",
+    "prettier": "^2.2.1",
+    "tsc": "^2.0.4",
+    "typescript": "^4.5.4"
+  }
+}

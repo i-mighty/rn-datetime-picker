@@ -1,0 +1,32 @@
+{
+  "name": "example-rnmdtp",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "dev": "expo start",
+    "copy-module": "cp -a ../src/. components/rn-datetime-picker",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.7",
+    "expo": "~44.0.0",
+    "next-frame": "^0.2.3",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-native": "0.64.3",
+    "react-native-modal": "^13.0.0",
+    "react-native-responsive-screen": "^1.4.2",
+    "react-native-safe-area-context": "3.3.2",
+    "react-native-web": "0.17.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "~0.64.12",
+    "typescript": "~4.3.5"
+  },
+  "private": true
+}
