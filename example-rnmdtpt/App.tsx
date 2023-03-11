@@ -7,7 +7,13 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View>
-        <DateTimePicker locale="zh" dateValue={new Date()} selectorMode="datetime" endMode="day" />
+        <DateTimePicker
+          activeColor="#4B0082"
+          locale="zh"
+          dateValue={new Date()}
+          selectorMode="datetime"
+          endMode="day"
+        />
       </View>
     </View>
   );

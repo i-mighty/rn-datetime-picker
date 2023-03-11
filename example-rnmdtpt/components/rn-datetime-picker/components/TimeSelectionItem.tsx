@@ -12,9 +12,17 @@ export interface TimeSelectionItemProps {
     value: string;
   };
   onValueSelected: (type: string, value: string, index: number) => void;
+  activeColor?: string;
 }
 
-const TimeSelectionItem: React.FC<TimeSelectionItemProps> = ({ index, item, onValueSelected, type, isSelected }) => {
+const TimeSelectionItem: React.FC<TimeSelectionItemProps> = ({
+  index,
+  item,
+  onValueSelected,
+  type,
+  isSelected,
+  activeColor,
+}) => {
   return (
     <TouchableWithoutFeedback
       disabled={item.type != "time" || item.disabled}
@@ -26,7 +34,19 @@ const TimeSelectionItem: React.FC<TimeSelectionItemProps> = ({ index, item, onVa
             opacity: item.type == "time" ? 1 : 0,
           },
         ]}>
-        <Text style={item.disabled ? styles.DisabledText : isSelected ? styles.SelectedText : styles.NormalTextDate}>
+        <Text
+          style={
+            item.disabled
+              ? styles.DisabledText
+              : isSelected
+              ? {
+                  fontSize: wp(5),
+                  // fontFamily: "roboto-bold",
+                  color: activeColor || "#F34E5C",
+                  textAlign: "center",
+                }
+              : styles.NormalTextDate
+          }>
           {item.value}
         </Text>
       </View>
@@ -48,12 +68,6 @@ const styles = StyleSheet.create({
     fontSize: wp(4),
     // fontFamily: "roboto-regular",
     color: "black",
-    textAlign: "center",
-  },
-  SelectedText: {
-    fontSize: wp(5),
-    // fontFamily: "roboto-bold",
-    color: "#F34E5C",
     textAlign: "center",
   },
   DisabledText: {

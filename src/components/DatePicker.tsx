@@ -19,6 +19,7 @@ export interface DatePickerProps {
   onChangeDate: (arg: { mode: Mode; dateValue: Date | null | undefined }) => void;
   selectorMode?: SelectorMode;
   locale?: string;
+  activeColor?: string;
 }
 export interface ByMonthDataType {
   forYear: number;
@@ -43,6 +44,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   onChangeDate = () => {},
   blocks = [],
   locale,
+  activeColor,
 }) => {
   dayjs.locale(locale || "en");
 
@@ -543,6 +545,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <DateSelectionItem
+              activeColor={activeColor}
               index={index}
               item={item}
               columns={columns}

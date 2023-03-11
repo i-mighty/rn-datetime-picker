@@ -14,6 +14,7 @@ export interface DateSelectionItemProps {
     value: any;
   };
   onValueSelected: (value: string) => void;
+  activeColor?: string;
 }
 
 const DateSelectionItem: React.FC<DateSelectionItemProps> = ({
@@ -23,6 +24,7 @@ const DateSelectionItem: React.FC<DateSelectionItemProps> = ({
   onValueSelected,
   isSelected,
   dateValueToShow,
+  activeColor,
 }) => {
   return (
     <View style={{ marginLeft: index % columns !== 0 ? wp(3) : 0, flex: 1 }}>
@@ -45,7 +47,7 @@ const DateSelectionItem: React.FC<DateSelectionItemProps> = ({
             style={[
               styles.DateItemCard,
               {
-                backgroundColor: isSelected ? "#F34E5C" : undefined,
+                backgroundColor: isSelected ? activeColor || "#F34E5C" : undefined,
                 opacity: item.type == "date" ? 1 : 0,
               },
             ]}>

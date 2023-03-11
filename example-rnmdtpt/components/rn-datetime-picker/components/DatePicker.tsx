@@ -7,7 +7,7 @@ import { Image } from "react-native";
 //https://corbt.com/posts/2015/12/22/breaking-up-heavy-processing-in-react-native.html
 //@ts-ignore
 import nextFrame from "next-frame";
-import { BlockType, Mode, Unwrap, SelectorMode } from "../types";
+import { BlockType, Mode, SelectorMode } from "../types";
 
 export interface DatePickerProps {
   dateValue: Dayjs | Date;
@@ -19,8 +19,22 @@ export interface DatePickerProps {
   onChangeDate: (arg: { mode: Mode; dateValue: Date | null | undefined }) => void;
   selectorMode?: SelectorMode;
   locale?: string;
+  activeColor?: string;
 }
-
+export interface ByMonthDataType {
+  forYear: number;
+  months: {
+    value: dayjs.Dayjs;
+    type: string;
+    disabled: boolean;
+    displayDates: (
+      | { value: string; type: string }
+      | { value: number; type: string; disabled: boolean }
+      | { value: dayjs.Dayjs; type: string; disabled: boolean }
+    )[];
+    dates: { value: dayjs.Dayjs; type: string; disabled: boolean }[];
+  }[];
+}
 const DatePicker: React.FC<DatePickerProps> = ({
   dateValue = dayjs(new Date()),
   endMode = "day",
@@ -30,6 +44,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   onChangeDate = () => {},
   blocks = [],
   locale,
+  activeColor,
 }) => {
   dayjs.locale(locale || "en");
 
@@ -37,7 +52,6 @@ const DatePicker: React.FC<DatePickerProps> = ({
   const [mode, setMode] = useState(endMode);
   const [columns, setColumns] = useState(7);
   const [dataShown, setDataShown] = useState<DateSelectionItemProps["item"][]>();
-  type ByMonthDataType = Unwrap<ReturnType<typeof processByMonths>>;
   const [byMonthData, setByMonthData] = useState<ByMonthDataType>();
 
   const monthsShort = dayjs.monthsShort();
@@ -76,7 +90,37 @@ const DatePicker: React.FC<DatePickerProps> = ({
     setByMonthData(result);
   };
 
-  const processByMonths = async (baseDate: Dayjs | Date) => {
+  interface ByMonth {
+    forYear: number;
+    months: {
+      value: dayjs.Dayjs;
+      type: string;
+      disabled: boolean;
+      displayDates: (
+        | { value: string; type: string }
+        | { value: number; type: string; disabled: boolean }
+        | { value: dayjs.Dayjs; type: string; disabled: boolean }
+      )[];
+      dates: { value: dayjs.Dayjs; type: string; disabled: boolean }[];
+    }[];
+  }
+
+  const processByMonths = async (
+    baseDate: Dayjs | Date
+  ): Promise<{
+    forYear: number;
+    months: {
+      value: dayjs.Dayjs;
+      type: string;
+      disabled: boolean;
+      displayDates: (
+        | { value: string; type: string }
+        | { value: number; type: string; disabled: boolean }
+        | { value: dayjs.Dayjs; type: string; disabled: boolean }
+      )[];
+      dates: { value: dayjs.Dayjs; type: string; disabled: boolean }[];
+    }[];
+  }> => {
     const byMonths = await Promise.all(
       [...monthsShort].map(async (item, index) => {
         await nextFrame();
@@ -501,6 +545,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <DateSelectionItem
+              activeColor={activeColor}
               index={index}
               item={item}
               columns={columns}

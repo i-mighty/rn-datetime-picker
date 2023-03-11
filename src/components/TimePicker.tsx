@@ -19,6 +19,7 @@ export interface TimePickerProps {
   onDateSelector?: () => void;
   selectorMode?: SelectorMode;
   locale?: string;
+  activeColor?: string;
 }
 
 export interface DataValueTypes {
@@ -42,6 +43,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
   selectorMode,
   onDateSelector,
   locale,
+  activeColor,
 }) => {
   dayjs.locale(locale || "en");
   const blocksToCheck = blocks.filter((block) => block.hasOwnProperty("time"));
@@ -431,6 +433,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
         getItemLayout={(data, index) => ({ length: hp(5), offset: hp(5) * index, index })}
         renderItem={({ item, index }) => (
           <TimeSelectionItem
+            activeColor={activeColor}
             index={index}
             item={item}
             onValueSelected={onValueSelected}

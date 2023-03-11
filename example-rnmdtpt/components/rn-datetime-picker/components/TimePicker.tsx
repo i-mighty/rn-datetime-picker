@@ -6,7 +6,7 @@ import TimeSelectionItem from "./TimeSelectionItem";
 //@ts-ignore
 import nextFrame from "next-frame";
 import LoaderView from "./LoaderView";
-import { BlockType, SelectorMode, Unwrap } from "../types";
+import { BlockType, SelectorMode } from "../types";
 
 const empty = { value: "b", type: "empty", disabled: true };
 
@@ -19,6 +19,20 @@ export interface TimePickerProps {
   onDateSelector?: () => void;
   selectorMode?: SelectorMode;
   locale?: string;
+  activeColor?: string;
+}
+
+export interface DataValueTypes {
+  value: string | number;
+  type: string;
+  disabled: boolean;
+}
+export interface ByHourDataType {
+  value: number;
+  type: string;
+  disabled: boolean;
+  minutes: DataValueTypes[];
+  displayMinutes: DataValueTypes[];
 }
 const TimePicker: React.FC<TimePickerProps> = ({
   dateValue = new Date(),
@@ -29,21 +43,20 @@ const TimePicker: React.FC<TimePickerProps> = ({
   selectorMode,
   onDateSelector,
   locale,
+  activeColor,
 }) => {
   dayjs.locale(locale || "en");
-
-  type ByHourDataType = Unwrap<ReturnType<typeof processByHours>>;
   const blocksToCheck = blocks.filter((block) => block.hasOwnProperty("time"));
   const HoursFlatList = useRef<FlatList>();
   const MinsFlatList = useRef<FlatList>();
   const CycleFlatList = useRef<FlatList>();
-  const [hourList, setHourList] = useState<ReturnType<typeof getDataValues>>([]);
-  const [minList, setMinList] = useState<ReturnType<typeof getDataValues>>([]);
-  const [cycleList, setCycleList] = useState<ReturnType<typeof getDataValues>>([
+  const [hourList, setHourList] = useState<DataValueTypes[]>([]);
+  const [minList, setMinList] = useState<DataValueTypes[]>([]);
+  const [cycleList, setCycleList] = useState<DataValueTypes[]>([
     { value: "AM", type: "time", disabled: true },
     { value: "PM", type: "time", disabled: true },
   ]);
-  const [byHourData, setByHourData] = useState<ByHourDataType>([]);
+  const [byHourData, setByHourData] = useState<ByHourDataType[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -262,7 +275,10 @@ const TimePicker: React.FC<TimePickerProps> = ({
           const byMinData = byMins.minutes[m];
 
           if (!byMinData.disabled) {
-            return currentDate.hour(hourSelected).minute(byMinData.value).second(0);
+            return currentDate
+              .hour(hourSelected)
+              .minute(byMinData.value as number)
+              .second(0);
           }
         }
         return getNearestAvailable("hour", value);
@@ -417,6 +433,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
         getItemLayout={(data, index) => ({ length: hp(5), offset: hp(5) * index, index })}
         renderItem={({ item, index }) => (
           <TimeSelectionItem
+            activeColor={activeColor}
             index={index}
             item={item}
             onValueSelected={onValueSelected}

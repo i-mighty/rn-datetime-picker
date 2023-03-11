@@ -18,12 +18,4 @@ export interface BlockType {
   };
 }
 
-export type Unwrap<T> = T extends Promise<infer U>
-  ? U
-  : T extends (...args: any) => Promise<infer U>
-  ? U
-  : T extends (...args: any) => infer U
-  ? U
-  : T;
-
 export type SelectorMode = "time" | "date" | "datetime";

@@ -19,6 +19,7 @@ export interface DateTimePickerProps {
   renderConfirmButton?: (onPress: () => void) => React.ReactNode;
   renderCancelButton?: (onPress: () => void) => React.ReactNode;
   locale?: string;
+  activeColor?: string;
 }
 
 const DateTimePicker: React.FC<DateTimePickerProps> = (props) => {
