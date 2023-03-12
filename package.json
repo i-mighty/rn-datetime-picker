@@ -1,5 +1,5 @@
 {
-  "name": "@imighty/rn-datetime-picker",
+  "name": "@i-mighty/rn-datetime-picker",
   "description": "A pure JS react-native modular & modern datetime picker",
   "version": "1.0.4",
   "main": "index.js",
@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc && cp -R src/assets lib",
     "postbuild": "cp package.json lib && cp .npmignore lib && cp .npmrc lib && cp .yarnrc lib",
-    "release": "yarn build && cd lib && npm publish",
+    "release": "yarn build && cd lib && npm publish --access public",
     "format": "prettier --write **/*.{js,ts,tsx}"
   },
   "dependencies": {
