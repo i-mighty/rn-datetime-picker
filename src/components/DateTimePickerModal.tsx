@@ -2,7 +2,6 @@ import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
 import DateTimePicker, { DateTimePickerProps } from "./DateTimePicker";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 interface DateTimePickerModalProps extends DateTimePickerProps {
   isVisible: boolean;
@@ -22,9 +21,7 @@ const DateTimePickerModal: React.FC<DateTimePickerModalProps> = (props) => {
       hideModalContentWhileAnimating={true}
       isVisible={isVisible}>
       <View style={styles.ModalWrapper}>
-        <SafeAreaView>
-          <DateTimePicker {...rest} onClose={onClose} />
-        </SafeAreaView>
+        <DateTimePicker {...rest} onClose={onClose} />
       </View>
     </Modal>
   );

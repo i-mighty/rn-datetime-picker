@@ -20,7 +20,6 @@
     "react-native": "0.64.3",
     "react-native-modal": "^13.0.0",
     "react-native-responsive-screen": "^1.4.2",
-    "react-native-safe-area-context": "3.3.2",
     "react-native-web": "0.17.1"
   },
   "devDependencies": {
